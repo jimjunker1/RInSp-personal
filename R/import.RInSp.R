@@ -46,8 +46,8 @@ import.RInSp = function(filename, col.header=FALSE, row.names = 0, info.cols= 0,
     # subsetting columns and rows
     if (subset.column[1] != 0) column.selection = subset.column else { 
       column.selection = c(1:cols)
-      if (info.cols[1] != 0) {
-        if (row.names != 0) column.selection = column.selection[-c(row.names, info.cols)]
+      if (info.cols[1] != 0 & row.names != 0) {
+        column.selection = column.selection[-c(row.names, info.cols)]
       } else if (row.names != 0) column.selection = column.selection[-row.names]
     }
     if (!is.na(subset.rows[1])) {

@@ -65,7 +65,7 @@ if (exclude %in% c("TRUE", "T"))
      varPSi = (t1 - t2)/idiet + (t3 - t4)/Y
      ris = list(PSi= matrix(PSi, dataset$num.individuals,1), IS= IS, population.diet = newpopdiet, num.individuals= dataset$num.individuals, VarPSi = varPSi, parameter = 0)
      close(pb) # close textbar  
-} else if(data.type == "proportion"){
+} else if(dataset$data.type == "proportion"){
   if (pop.diet == "sum") diet.pop = 0 else diet.pop = 1
   # coerce vectors to be double to assure correct transfer to C code
   if (!is.double(dataset$resources)) dataset$resources = matrix(as.double(dataset$resources), dataset$num.individuals, dataset$num.prey)
