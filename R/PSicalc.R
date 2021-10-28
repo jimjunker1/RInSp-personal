@@ -14,7 +14,7 @@ PSicalc = function(dataset, pop.diet = "sum", exclude = FALSE, replicates=999){
   #
 # some checking 
 if (class(dataset) != "RInSp") stop("The input must be an object of class RSI")
-if (dataset$data.type != "integer") stop("Input data type must be integer.")
+# if (dataset$data.type != "integer") stop("Input data type must be integer.")
 if (pop.diet %in% c("sum", "average") == FALSE) stop("The specified population diet type is wrong.")
 if (exclude %in% c("TRUE", "T", "FALSE", "F") == FALSE) stop("The specified exclusion option is wrong.")
 if (!is.double(replicates)) stop("The specified replicates option is wrong.") else replicates = abs(as.integer(replicates))
@@ -60,8 +60,23 @@ if (exclude %in% c("TRUE", "T"))
      varPSi = (t1 - t2)/idiet + (t3 - t4)/Y
      ris = list(PSi= matrix(PSi, dataset$num.individuals,1), IS= IS, population.diet = newpopdiet, num.individuals= dataset$num.individuals, VarPSi = varPSi, parameter = 0)
      close(pb) # close textbar  
-} else 
-     {
+} else if(data.type == "proportion"){
+  if (pop.diet == "sum") diet.pop = 0 else diet.pop = 1
+  # coerce vectors to be double to assure correct transfer to C code
+  if (!is.double(dataset$resources)) dataset$resources = matrix(as.double(dataset$resources), dataset$num.individuals, dataset$num.prey)
+  ris2 = .Call("PSicalc", dataset$resources, as.vector(diet.pop), as.vector(replicates), PACKAGE="RInSp")
+  NRows = dataset$num.individuals
+  PSi = ris2[1:NRows, 1]
+  varPSi = ris2[(NRows+1):(2*NRows), 1]
+  IS = ris2[(2*NRows + 1),1]
+  IS.sim = apply(ris2[1:NRows, 1:(replicates +1)], 2, mean)
+  IS.sim = matrix(IS.sim, length(IS.sim), 1)
+  colnames(IS.sim) = "IS"
+  cum.distr = ecdf(IS.sim)
+  ISpvalue = cum.distr(IS.sim[1])
+  if (pop.diet == "average") dietpop = apply(dataset$proportions, 2, sum) / (dataset$num.individuals) else dietpop = apply(dataset$resources, 2, sum) / sum(dataset$resources)
+  ris= list(PSi = PSi, IS = IS, PSi.montecarlo = ris2[1:NRows, 1:(replicates +1)], Var.montecarlo = ris2[(NRows +1):(2*NRows), 1:(replicates+1)], VarPSi = varPSi, population.diet = dietpop, IS.pvalue = ISpvalue, montecarlo = IS.sim, num.individuals = dataset$num.individuals, parameter = 1)
+} else {
      if (pop.diet == "sum") diet.pop = 0 else diet.pop = 1
      # coerce vectors to be double to assure correct transfer to C code
      if (!is.double(dataset$resources)) dataset$resources = matrix(as.double(dataset$resources), dataset$num.individuals, dataset$num.prey)
