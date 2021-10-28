@@ -1,3 +1,7 @@
+#'
+#'
+#'
+#' @export
 WTcMC = function(dataset, replicates=999, weight="equal", print.ris=TRUE){
   #
   # The program calculates the Total Niche Width (TNW), and breaks TNW down into its

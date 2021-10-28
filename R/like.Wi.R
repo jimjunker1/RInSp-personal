@@ -1,3 +1,7 @@
+#'
+#'
+#'
+#' @export
 like.Wi = function(dataset){
   #
   # The procedure will allow you to calculate likelihood measures of

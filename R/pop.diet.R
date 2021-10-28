@@ -1,3 +1,8 @@
+#'
+#'
+#'
+#' @export
+#' 
 pop.diet <-
 function(dataset, prop = "sum"){
   #

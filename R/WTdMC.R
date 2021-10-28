@@ -1,3 +1,7 @@
+#'
+#'
+#'
+#' @export
 WTdMC = function(dataset, pop.diet = "sum", replicates=999, print.ris=TRUE){
   #
   # The program calculates the Total Niche Width (TNW), and breaks TNW down into its Between

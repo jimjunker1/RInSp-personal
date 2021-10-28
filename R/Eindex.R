@@ -1,3 +1,8 @@
+#'
+#'
+#'
+#' @export
+#' 
 Eindex <-
   function(dataset, index = "saramaki", jackknife = FALSE){
     #

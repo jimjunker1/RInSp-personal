@@ -1,3 +1,7 @@
+#'
+#'
+#'
+#' @export
 Hier2L = function(dataset, factor=1, weight.type="N_items") {
   #
   # Variance partition and WIC/TNW

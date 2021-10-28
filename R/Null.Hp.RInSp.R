@@ -1,3 +1,7 @@
+#'
+#'
+#'
+#' @export
 Null.Hp.RInSp = function(dataset, prop = "sum"){
   #
   # The procedure let you build an integer/count dataset of class RInSp:

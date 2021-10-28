@@ -1,3 +1,7 @@
+#'
+#'
+#'
+#' @export
 MCp.RInSp = function(dataset, pop.diet = "sum", replicates = 999){
   #
   # The procedure replicates the two strategies of Monte Carlo resampling available in

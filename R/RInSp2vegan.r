@@ -1,3 +1,7 @@
+#'
+#'
+#'
+#' @export
 RInSp2vegan <-
 function(dataset){
   #

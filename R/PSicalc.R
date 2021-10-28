@@ -1,3 +1,8 @@
+#'
+#'
+#'
+#'
+#' @export
 PSicalc = function(dataset, pop.diet = "sum", exclude = FALSE, replicates=999){
   #
   # Measure of individual specialization, based on the average pairwise overlap of

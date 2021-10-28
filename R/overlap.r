@@ -1,3 +1,7 @@
+#'
+#'
+#'
+#' @export
 overlap <- function(dataset){
   #
   # This option calculates the pairwise diet overlap between all individuals in the sample

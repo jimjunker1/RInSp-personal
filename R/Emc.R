@@ -1,3 +1,7 @@
+#'
+#'
+#'
+#' @export
 Emc <-
 function(dataset, popd.type = "sum", index = "saramaki", replicates=999){
   #

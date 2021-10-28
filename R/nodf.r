@@ -1,3 +1,7 @@
+#'
+#'
+#'
+#' @export
 NODF = function(dataset, print.results= TRUE){
   #
   # NODF (acronym for "nestedness metric based on overlap and decreasing fill")

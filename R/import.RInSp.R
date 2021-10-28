@@ -1,3 +1,7 @@
+#'
+#'
+#'
+#' @export
 import.RInSp = function(filename, col.header=FALSE, row.names = 0, info.cols= 0, subset.column = 0,
                       subset.rows = NA, data.type= "integer", print.messages=TRUE){
     #
