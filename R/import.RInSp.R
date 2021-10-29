@@ -3,7 +3,7 @@
 #'
 #' @export
 import.RInSp = function(filename, col.header=FALSE, row.names = 0, info.cols= 0, subset.column = 0,
-                      subset.rows = NA, data.type= "integer", print.messages=TRUE){
+                      subset.rows = NA, data.type= "integer", print.messages=TRUE, drop.res = TRUE){
     #
     # Work horse function for transforming a resource matrix or dataframe into
     # an object to be used by other functions of the RInSp package
@@ -67,10 +67,12 @@ import.RInSp = function(filename, col.header=FALSE, row.names = 0, info.cols= 0,
     numResTot = dim(resources)[2]
     if (info.cols[1] != 0) info = subset(info, apply(resources, 1, sum) > 0)
     resources = subset(resources, apply(resources, 1, sum) > 0) # dropping zero sum diets
+    if(drop.res){
     # dropping zero sum resources
     tmp = t(resources)
     tmp = subset(tmp, apply(tmp, 1, sum) > 0) 
     resources = t(tmp)
+    }
     numIndEf = dim(resources)[1]
     numResEf = dim(resources)[2]
     row.names = dimnames(resources)[[1]]
@@ -78,7 +80,7 @@ import.RInSp = function(filename, col.header=FALSE, row.names = 0, info.cols= 0,
     col.names = dimnames(resources)[[2]]
     if (data.type == "proportion") ris = list(resources= 0, proportions= prop, data.type= data.type, col.names= col.names, ind.names = row.names, info= info, num.prey= numResEf, num.individuals= numIndEf, num.zero.prey= numResTot - numResEf, num.ind.zero= numIndTot - numIndEf)
     else ris = list(resources= resources, proportions= prop, data.type= data.type, col.names= col.names, ind.names = row.names, info= info, num.prey= numResEf, num.individuals= numIndEf, num.zero.prey= numResTot - numResEf, num.ind.zero= numIndTot - numIndEf)
-    if (print.messages == TRUE) {
+    if (all(print.messages == TRUE, drop.res == TRUE)){
     if ((numIndTot - numIndEf) != 0) {
       cat("\n Warning! \n")
       cat("\n The total number of sample was", numIndTot, "but", (numIndTot - numIndEf))
@@ -95,7 +97,23 @@ import.RInSp = function(filename, col.header=FALSE, row.names = 0, info.cols= 0,
                                            cat(" resources were dropped \n")
                                            cat("because not present in the selected sample \n") }
     }
-	}
+    } else if (all(print.messages == TRUE, drop.res==FALSE)) {
+      if ((numIndTot - numIndEf) != 0) {
+        cat("\n Warning! \n")
+        cat("\n The total number of sample was", numIndTot, "but", (numIndTot - numIndEf))
+        if ((numIndTot - numIndEf) == 1) { cat(" individual was dropped \n")
+          cat("as not consuming the selected resources \n")} else { 
+            cat(" individuals were dropped \n")
+            cat("as not consuming the selected resources \n") }
+      }
+      if ((numResTot - numResEf) != 0) {
+        cat("\n Warning! \n")
+        cat("\n The total number of resources was", numResTot, "but" (numResTot - numResEf))
+        if ((numResTot - numResEf) == 1) { cat(" resource was zero and kept \n")
+        } else {
+            cat(" resources were zero and kept \n")}
+      }
+    }
     class(ris) = "RInSp"
     return(ris)}
 
