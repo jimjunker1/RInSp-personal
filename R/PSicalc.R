@@ -108,5 +108,5 @@ if (exclude %in% c("TRUE", "T"))
   { cat("\n") }
  else 
   { cat("\n The p-value for P(ISsim => ISobs) is: ", ISpvalue, "\n") }
-return(ris)}
+return(ris = ris)}
 
