@@ -90,7 +90,7 @@ if (exclude %in% c("TRUE", "T"))
      PSi = ris2[1:NRows, 1]
      varPSi = ris2[(NRows+1):(2*NRows), 1]
      IS = ris2[(2*NRows + 1),1]
-     IS.sim = apply(ris2[1:NRows, 1:(replicates +1)], 2, mean)
+     IS.sim = apply(ris2[1:NRows, 1:(replicates +1), drop = FALSE], 2, mean)
      IS.sim = matrix(IS.sim, length(IS.sim), 1)
      colnames(IS.sim) = "IS"
      cum.distr = ecdf(IS.sim)
