@@ -70,12 +70,11 @@ if (exclude %in% c("TRUE", "T"))
   # coerce vectors to be double to assure correct transfer to C code
   if (!is.double(dataset$resources)) dataset$resources = matrix(as.double(dataset$resources), dataset$num.individuals, dataset$num.prey)
   ris2 = .Call("PSicalc", dataset$resources, as.vector(diet.pop), as.vector(replicates), PACKAGE="RInSp")
-  ris2[ris2 < 0] <- 0
   NRows = dataset$num.individuals
   PSi = ris2[1:NRows, 1]
   varPSi = ris2[(NRows+1):(2*NRows), 1]
   IS = ris2[(2*NRows + 1),1]
-  IS.sim = apply(ris2[1:NRows, 1:(replicates +1)], 2, mean)
+  IS.sim = apply(ris2[1:NRows, 1:(replicates +1), drop = FALSE], 2, mean)
   IS.sim = matrix(IS.sim, length(IS.sim), 1)
   colnames(IS.sim) = "IS"
   cum.distr = ecdf(IS.sim)
