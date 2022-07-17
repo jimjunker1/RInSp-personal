@@ -16,7 +16,7 @@ import.RInSp = function(filename, col.header=FALSE, row.names = 0, info.cols= 0,
     # modified by Jim Junker to allow for use of R objects 
     #
     # read data
-    if (grepl("tbl_df|tbl|data.frame", class(filename))){
+    if (is.data.frame(filename)){
       datatmp = filename
     }
     else if (class(filename) == "character") 
