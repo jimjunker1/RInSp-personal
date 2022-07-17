@@ -13,16 +13,19 @@ import.RInSp = function(filename, col.header=FALSE, row.names = 0, info.cols= 0,
     #
     # Version: 1.0
     # Date: 10/11/2012
+    # modified by Jim Junker to allow for use of R objects 
     #
     # read data
-    if (class(filename) == "character") 
+    if (class(filename) %in% c("tbl_df","tbl","data.frame")){
+      datatmp = filename
+    }
+    else if (class(filename) == "character") 
     { if (row.names > 0) {
       datatmp = read.table(filename, header=col.header)
       row.names(datatmp) = datatmp[ , row.names]
     }  
       else datatmp = read.table(filename, header=col.header)
-    } 
-    else datatmp = filename
+    }
     cols = dim(datatmp)[2]
     #
     # some checking before process data
